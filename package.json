@@ -15,7 +15,5 @@
     },
     "author": "N8",
     "license": "MIT",
-    "dependencies": {
-        "@zlanguage/zcomp": "0.0.6"
-    }
+    "dependencies": {}
 }
