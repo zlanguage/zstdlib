@@ -1,0 +1,14 @@
+{
+    "name": "zstdlib",
+    "version": "0.0.0",
+    "description": "The Z standard library (coming soon) and runtime.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "Z"
+    ],
+    "author": "N8",
+    "license": "MIT"
+}
