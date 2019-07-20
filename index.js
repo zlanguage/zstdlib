@@ -94,41 +94,41 @@ function log(...things) {
 }
 
 function $plus(x, y) {
-    if (y.r$plus) {
-        return y.r$plus(x);
+    if (y["r+"]) {
+        return y["r+"](x);
     }
-    if (x.$plus) {
-        return x.$plus(y);
+    if (x["+"]) {
+        return x["+"](y);
     }
     return Number(x) + Number(y);
 }
 
 function $minus(x, y) {
-    if (y.r$minus) {
-        return y.r$minus(x);
+    if (y["r-"]) {
+        return y["r-"](x);
     }
-    if (x.$minus) {
-        return x.$minus(y);
+    if (x["-"]) {
+        return x["-"](y);
     }
     return Number(x) - Number(y);
 }
 
 function $star(x, y) {
-    if (y.r$star) {
-        return y.r$star(x);
+    if (y["r*"]) {
+        return y["r*"](x);
     }
-    if (x.$star) {
-        return x.$star(y);
+    if (x["*"]) {
+        return x["*"](y);
     }
     return Number(x) * Number(y);
 }
 
 function $slash(x, y) {
-    if (y.r$slash) {
-        return y.r$slash(x);
+    if (y["r/"]) {
+        return y["r/"](x);
     }
-    if (x.$slash) {
-        return x.$slash(y);
+    if (x["/"]) {
+        return x["/"](y);
     }
     return Number(x) / Number(y);
 }
@@ -142,11 +142,11 @@ function $carot(x, y) {
 }
 
 function $lt(x, y) {
-    if (y.r$lt) {
-        return y.r$lt(x);
+    if (y["r<"]) {
+        return y["r<"](x);
     }
-    if (x.$lt) {
-        return x.$lt(y);
+    if (x["<"]) {
+        return x["<"](y);
     }
     return Number(x) < Number(y);
 }
@@ -161,6 +161,30 @@ function $gt(x, y) {
 
 function $lt$eq(x, y) {
     return !$gt(x, y);
+}
+
+function $plusplus(x, ...ys) {
+    if (!x.concat) {
+        throw new Error(`${x} cannot be concatted.`);
+    }
+    return x.concat(...ys);
+}
+
+
+function not(x) {
+    return !x;
+}
+
+function both(x, y) {
+    return Boolean(x && y);
+}
+
+function either(x, y) {
+    return Boolean(x || y);
+}
+
+function m(...strs) {
+    return strs.join("\n")
 }
 
 function assertBool(bool) {
@@ -184,5 +208,10 @@ module.exports = Object.freeze({
     $lt,
     $gt$eq,
     $gt,
-    $lt$eq
+    $lt$eq,
+    not,
+    $plus$plus,
+    m,
+    both,
+    either
 })
