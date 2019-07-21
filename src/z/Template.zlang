@@ -1,11 +1,4 @@
 def templateRegExp: RegExp("\\{\\{(.+?)(:(.+))?\\}\\}", "g")
-def not: func (val) {
-    val: Boolean(val)
-    if =(val, true) {
-        return false
-    }
-    return true
-}
 def fetchProp: func(propList, obj) {
     if =(propList.length, 1) {
         return obj[propList[0]]
