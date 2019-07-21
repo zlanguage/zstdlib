@@ -58,7 +58,7 @@ def Tuple: func () {
 
 def red: Tuple(255, 0, 0)
 def yellow: Tuple(0, 255, 0)
-log(red.concat(yellow).toString())
+log(++(red, yellow).toString())
 
 export Tuple
 
