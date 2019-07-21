@@ -68,7 +68,4 @@ const Tuple = function () {
   stone(res);
   return res;
 };
-const red = Tuple(255, 0, 0);
-const yellow = Tuple(0, 255, 0);
-log($plus$plus(red, yellow)["toString"]());
 module.exports = stone(Tuple);
