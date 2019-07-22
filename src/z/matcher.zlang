@@ -5,6 +5,7 @@ def isRest: makePatTester("rest")
 def isType: makePatTester("type")
 def isObj: makePatTester("obj")
 def isProp: makePatTester("prop")
+def isRange: makePatTester("range")
 def pat=: func(val, pat) {
     if isWildcard(pat) {
         return true
@@ -33,6 +34,11 @@ def pat=: func(val, pat) {
             }
             return pat=(val[prop.key], prop.value)
         })
+    } else if isRange(pat) {
+        if both(>=(val, pat.from), <=(val, pat.to)) {
+            return true
+        }
+        return false
     }
     return =(val, pat)
 }
@@ -99,6 +105,13 @@ def prop: func (key, value){
         value
     ]
 }
+def range: func(from, to){
+    return [
+        "type": func "<|range|>",
+        from,
+        to
+    ]
+}
 let matcher: func(pats){
     return func(val){
         let res: undefined
@@ -119,4 +132,6 @@ matcher.rest: rest
 matcher.prop: prop
 matcher.type: type
 matcher.obj: obj
+matcher.range: range
+
 export matcher
