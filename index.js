@@ -193,6 +193,89 @@ function assertBool(bool) {
     }
     throw new Error("Expected Boolean");
 }
+const JS = {
+    new(constructor, ...args) {
+        return new(constructor)(...args);
+    },
+    typeof(thing) {
+        return typeof thing;
+    },
+    $plus(x, y) {
+        if (y !== undefined) {
+            return x + y;
+        }
+        return +x;
+    },
+    $minus(x, y) {
+        if (y !== undefined) {
+            return x - y;
+        }
+        return -x;
+    },
+    $star(x, y) {
+        return x * y;
+    },
+    $star$star(x, y) {
+        return x ** y;
+    },
+    $percent(x, y) {
+        return x % y;
+    },
+    $eq$eq(x, y) {
+        return x == y;
+    },
+    $eq$eq$eq(x, y) {
+        return x === y;
+    },
+    $exclam$eq(x, y) {
+        return x != y;
+    },
+    $excalm$eq$eq(x, y) {
+        return x !== y;
+    },
+    $gt(x, y) {
+        return x > y;
+    },
+    $lt(x, y) {
+        return x < y;
+    },
+    $gt$eq(x, y) {
+        return x >= y;
+    },
+    $lt$eq(x, y) {
+        return x <= y;
+    },
+    $and$and(x, y) {
+        return x && y;
+    },
+    $or$or(x, y) {
+        return x || y;
+    },
+    $exclam(x) {
+        return !x;
+    },
+    $and(x, y) {
+        return x & y;
+    },
+    $or(x, y) {
+        return x | y;
+    },
+    $carot(x, y) {
+        return x ^ y;
+    },
+    bitwiseNot(x) {
+        return ~x;
+    },
+    $lt$lt(x, y) {
+        return x << y;
+    },
+    $gt$gt(x, y) {
+        return x >> y;
+    },
+    $gt$gt$gt(x, y) {
+        return x >>> y;
+    }
+}
 module.exports = Object.freeze({
     $eq,
     isObject,
@@ -213,5 +296,6 @@ module.exports = Object.freeze({
     $plus$plus,
     m,
     both,
-    either
+    either,
+    JS
 })
