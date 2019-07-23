@@ -35,6 +35,7 @@ const isRest = makePatTester("rest");
 const isType = makePatTester("type");
 const isObj = makePatTester("obj");
 const isProp = makePatTester("prop");
+const isRange = makePatTester("range");
 const pat$eq = function (val, pat) {
   if (assertBool(isWildcard(pat))) {
     return true;
@@ -66,6 +67,13 @@ const pat$eq = function (val, pat) {
             }
             return pat$eq(val[prop["key"]], prop["value"]);
           });
+        } else {
+          if (assertBool(isRange(pat))) {
+            if (assertBool(both($gt$eq(val, pat["from"]), $lt$eq(val, pat["to"])))) {
+              return true;
+            }
+            return false;
+          }
         }
       }
     }
@@ -152,6 +160,15 @@ const prop = function (key, value) {
     ["value"]: value
   };
 };
+const range = function (from, to) {
+  return {
+    ["type"]: function () {
+      return "<|range|>";
+    },
+    ["from"]: from,
+    ["to"]: to
+  };
+};
 let matcher = function (pats) {
   return function (val) {
     let res = undefined;
@@ -172,4 +189,5 @@ matcher["rest"] = rest;
 matcher["prop"] = prop;
 matcher["type"] = type;
 matcher["obj"] = obj;
+matcher["range"] = range;
 module.exports = stone(matcher);
