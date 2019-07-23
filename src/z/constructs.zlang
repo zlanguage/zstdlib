@@ -1,0 +1,49 @@
+def _if: func (cond) [
+    "then": func (res) [
+        "_else": func (otherres) {
+            if cond {
+                return res()
+            } else {
+                return otherres()
+            }
+        }
+    ]
+]
+
+def _while: func (cond) func (body) {
+    loop {
+        if not(cond()) {
+            break
+        }
+        body()
+    }
+}
+
+def _do: func (body) [
+    "_while": func (cond) {
+        loop {
+            body()
+            if not(cond()) {
+                break
+            }
+        }
+    }
+]
+
+def _for: func (init, cond, step) func (body) {
+    let state: match init() {
+        array!arr => arr,
+        _ => [_]
+    }
+    loop {
+        body(...state)
+        state: step(...state)
+        if not(cond(...state)) {
+            break
+        }
+    }
+}
+
+_for(func 0, func <(i!, 10), func +(i!, 1))(func (i) {
+    log(i)
+})

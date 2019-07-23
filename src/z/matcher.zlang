@@ -112,7 +112,7 @@ def range: func(from, to){
         to
     ]
 }
-let matcher: func(pats){
+let _matcher: func(pats){
     return func(val){
         let res: undefined
         pats.some(func ((pat, resfunc)) {
@@ -126,12 +126,12 @@ let matcher: func(pats){
         return res
     }
 }
-matcher.wildcard: wildcard
-matcher.arr: arr
-matcher.rest: rest
-matcher.prop: prop
-matcher.type: type
-matcher.obj: obj
-matcher.range: range
+_matcher.wildcard: wildcard
+_matcher.arr: arr
+_matcher.rest: rest
+_matcher.prop: prop
+_matcher.type: type
+_matcher.obj: obj
+_matcher.range: range
 
-export matcher
+export _matcher

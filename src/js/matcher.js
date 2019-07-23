@@ -1,6 +1,7 @@
 "use strict";
 
-const $Z = require("@zlanguage/zstdlib");
+const $Z = require("@zlanguage/zstdlib")
+const matcher = require("@zlanguage/zstdlib/src/js/matcher");
 
 const $eq = $Z.$eq;
 const isObject = $Z.isObject;
@@ -169,7 +170,7 @@ const range = function (from, to) {
     ["to"]: to
   };
 };
-let matcher = function (pats) {
+let _matcher = function (pats) {
   return function (val) {
     let res = undefined;
     pats["some"](function ([pat, resfunc]) {
@@ -183,11 +184,11 @@ let matcher = function (pats) {
     return res;
   };
 };
-matcher["wildcard"] = wildcard;
-matcher["arr"] = arr;
-matcher["rest"] = rest;
-matcher["prop"] = prop;
-matcher["type"] = type;
-matcher["obj"] = obj;
-matcher["range"] = range;
-module.exports = stone(matcher);
+_matcher["wildcard"] = wildcard;
+_matcher["arr"] = arr;
+_matcher["rest"] = rest;
+_matcher["prop"] = prop;
+_matcher["type"] = type;
+_matcher["obj"] = obj;
+_matcher["range"] = range;
+module.exports = stone(_matcher);
