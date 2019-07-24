@@ -40,6 +40,14 @@ const _if = function (cond) {
     }
   };
 };
+const _loop = function (body) {
+  const cancel = Symbol("cancel");
+  while (true) {
+    if (assertBool($eq(body(cancel), cancel))) {
+      break;
+    }
+  }
+};
 const _while = function (cond) {
   return function (body) {
     while (true) {
@@ -73,19 +81,67 @@ const _for = function (init, cond, step) {
       }]])(init());
     while (true) {
       body(...state);
-      state = step(...state);
+      state = matcher([
+        [matcher.type("array", "arr"), function (arr) {
+          return arr;
+        }],
+        [matcher.wildcard("_"), function (_) {
+          return [_, ...state["slice"](1)];
+        }]])(step(...state));
       if (assertBool(not(cond(...state)))) {
         break;
       }
     }
   };
 };
-_for(function () {
-  return 0;
-}, function (i$exclam) {
-  return $lt(i$exclam, 10);
-}, function (i$exclam) {
-  return $plus(i$exclam, 1);
-})(function (i) {
-  log(i);
+const _unless = function (cond) {
+  return {
+    ["do"]: function (body) {
+      if (assertBool(not(cond))) {
+        body();
+      }
+    }
+  };
+};
+const _until = function (cond) {
+  return function (body) {
+    while (true) {
+      if (assertBool(cond())) {
+        break;
+      }
+      body();
+    }
+  };
+};
+const _raise = function (str) {
+  throw new Error(str);
+};
+const _settle = function (err) {
+  err["settled"] = true;
+};
+const _try = function (body) {
+  return {
+    ["_on"]: function (handler) {
+      try {
+        body();
+      } catch (err) {
+        handler(err);
+        if (assertBool($eq(err["settled"], undefined))) {
+          throw new Error("Error err not settled.")
+        }
+      }
+    }
+  };
+};
+module.exports = stone({
+  ["_if"]: _if,
+  ["_loop"]: _loop,
+  ["_while"]: _while,
+  ["_do"]: _do,
+  ["_for"]: _for,
+  ["_unless"]: _unless,
+  ["_until"]: _until,
+  ["_raise"]: _raise,
+  ["_settle"]: _settle,
+  ["_try"]: _try
 });

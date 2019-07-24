@@ -10,6 +10,14 @@ def _if: func (cond) [
     ]
 ]
 
+def _loop: func (body) {
+    def cancel: Symbol("cancel")
+    loop {
+        if =(body(cancel), cancel) {
+            break
+        }
+    }
+}
 def _while: func (cond) func (body) {
     loop {
         if not(cond()) {
@@ -37,13 +45,60 @@ def _for: func (init, cond, step) func (body) {
     }
     loop {
         body(...state)
-        state: step(...state)
+        state: match step(...state) {
+            array!arr => arr,
+            _ => [_, ...state.slice(1)]
+        }
         if not(cond(...state)) {
             break
         }
     }
 }
 
-_for(func 0, func <(i!, 10), func +(i!, 1))(func (i) {
-    log(i)
-})
+def _unless: func (cond) [
+    "do": func (body) {
+        if not(cond) {
+            body()
+        }
+    }
+]
+
+def _until: func (cond) func (body) {
+    loop {
+        if cond() {
+            break
+        }
+        body()
+    }
+}
+
+def _raise: func (str) {
+    raise str
+}
+
+def _settle: func (err) {
+    settle err
+}
+
+def _try: func (body) [
+    "_on": func (handler) {
+        try {
+            body()
+        } on err {
+            handler(err)
+        }
+    }
+]
+
+export [
+    "_if": _if,
+    _loop,
+    _while,
+    _do,
+    _for,
+    _unless,
+    _until,
+    _raise,
+    _settle,
+    _try
+]
