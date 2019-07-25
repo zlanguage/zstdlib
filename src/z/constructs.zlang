@@ -9,7 +9,6 @@ def _if: func (cond) [
         }
     ]
 ]
-
 def _loop: func (body) {
     def cancel: Symbol("cancel")
     loop {

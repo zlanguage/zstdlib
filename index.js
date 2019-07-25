@@ -195,7 +195,7 @@ function assertBool(bool) {
 }
 const JS = {
     new(constructor, ...args) {
-        return newc(constructor)(...args);
+        return new(constructor)(...args);
     },
     typeof(thing) {
         return typeof thing;
