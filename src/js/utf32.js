@@ -1,0 +1,95 @@
+"use strict";
+
+const $Z = require("@zlanguage/zstdlib")
+const matcher = require("@zlanguage/zstdlib/src/js/matcher");
+
+const $eq = $Z.$eq;
+const isObject = $Z.isObject;
+const typeOf = $Z.typeOf;
+const stone = $Z.stone;
+const log = $Z.log;
+const copy = $Z.copy;
+const assertBool = $Z.assertBool;
+const $plus = $Z.$plus;
+const $minus = $Z.$minus;
+const $star = $Z.$star;
+const $slash = $Z.$slash;
+const $lt = $Z.$lt;
+const $gt$eq = $Z.$gt$eq;
+const $gt = $Z.$gt;
+const $lt$eq = $Z.$lt$eq;
+const not = $Z.not;
+const $plus$plus = $Z.$plus$plus;
+const m = $Z.m;
+const both = $Z.both;
+const either = $Z.either;
+const JS = $Z.JS;
+
+const quote = String["fromCharCode"](34);
+let upoints = undefined;
+const ustring = function (str) {
+  const points = JS["new"](Uint32Array, [...str]["map"](function (char$exclam) {
+    return char$exclam["codePointAt"](0);
+  }));
+  return stone({
+    ["type"]: function () {
+      return "ustr";
+    },
+    ["toString"]: function () {
+      let i = 0;
+      let res = "";
+      while (true) {
+        if (assertBool($gt$eq(i, points["length"]))) {
+          break;
+        }
+        res = res["concat"](String["fromCodePoint"](points[i]));
+        i = $plus(i, 1);
+      }
+      return "u"["concat"](quote, res, quote);
+    },
+    ["toJSON"]: function () {
+      return this["toString"]()["slice"](1);
+    },
+    ["at"]: function (index$exclam) {
+      return upoints(points[index$exclam]);
+    },
+    ["codeAt"]: function (index$exclam) {
+      return points[index$exclam];
+    },
+    ["points"]: function () {
+      return points;
+    },
+    ["concat"]: function (other$exclam) {
+      return upoints(...points, ...other$exclam["points"]());
+    },
+    ["length"]: function () {
+      return points["length"];
+    },
+    ["slice"]: function (start$exclam, end$exclam) {
+      return upoints(...points["slice"](start$exclam, end$exclam));
+    },
+    ["="]: function (str) {
+      str = matcher([
+        [matcher.type("arr", ""), function () {
+          return upoints(...str);
+        }],
+        [matcher.type("string", ""), function () {
+          return ustring(str);
+        }],
+        [matcher.wildcard("_"), function (_) {
+          return _;
+        }]])(str);
+      return $eq(points, str["points"]());
+    }
+  });
+};
+upoints = function (...points) {
+  return ustring(points["map"](function (point$exclam) {
+    return String["fromCodePoint"](point$exclam);
+  })["join"](""));
+};
+const utf32 = {
+  ["string"]: ustring,
+  ["points"]: upoints,
+  ["quote"]: quote
+};
