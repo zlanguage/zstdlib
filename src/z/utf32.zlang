@@ -27,7 +27,7 @@ def ustring: func (str) {
         "slice": func upoints(...points.slice(start!, end!)),
         "=": func (str) {
             str: match str {
-                arr! => upoints(...str),
+                array! => upoints(...str),
                 string! => ustring(str),
                 _ => _
             }

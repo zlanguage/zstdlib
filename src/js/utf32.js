@@ -70,7 +70,7 @@ const ustring = function (str) {
     },
     ["="]: function (str) {
       str = matcher([
-        [matcher.type("arr", ""), function () {
+        [matcher.type("array", ""), function () {
           return upoints(...str);
         }],
         [matcher.type("string", ""), function () {

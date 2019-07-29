@@ -1,6 +1,7 @@
 "use strict";
 
-const $Z = require("@zlanguage/zstdlib");
+const $Z = require("@zlanguage/zstdlib")
+const matcher = require("@zlanguage/zstdlib/src/js/matcher");
 
 const $eq = $Z.$eq;
 const isObject = $Z.isObject;
@@ -22,6 +23,7 @@ const $plus$plus = $Z.$plus$plus;
 const m = $Z.m;
 const both = $Z.both;
 const either = $Z.either;
+const JS = $Z.JS;
 
 const Tuple = function () {
   const fields = stone(Array["from"](arguments));

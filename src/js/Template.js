@@ -1,6 +1,7 @@
 "use strict";
 
-const $Z = require("@zlanguage/zstdlib");
+const $Z = require("@zlanguage/zstdlib")
+const matcher = require("@zlanguage/zstdlib/src/js/matcher");
 
 const $eq = $Z.$eq;
 const isObject = $Z.isObject;
@@ -17,15 +18,14 @@ const $lt = $Z.$lt;
 const $gt$eq = $Z.$gt$eq;
 const $gt = $Z.$gt;
 const $lt$eq = $Z.$lt$eq;
+const not = $Z.not;
+const $plus$plus = $Z.$plus$plus;
+const m = $Z.m;
+const both = $Z.both;
+const either = $Z.either;
+const JS = $Z.JS;
 
 const templateRegExp = RegExp("\{\{(.+?)(:(.+))?\}\}", "g");
-const not = function (val) {
-  val = Boolean(val);
-  if (assertBool($eq(val, true))) {
-    return false;
-  }
-  return true;
-};
 const fetchProp = function (propList, obj) {
   if (assertBool($eq(propList["length"], 1))) {
     return obj[propList[0]];

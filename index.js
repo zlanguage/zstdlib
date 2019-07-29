@@ -193,6 +193,13 @@ function assertBool(bool) {
     }
     throw new Error("Expected Boolean");
 }
+
+function assertType(type, val) {
+    if (typeOf(val) === type) {
+        return val;
+    }
+    throw new Error(`${val} is not of type ${type}.`)
+}
 const JS = {
     new(constructor, ...args) {
         return new(constructor)(...args);
@@ -276,6 +283,7 @@ const JS = {
         return x >>> y;
     }
 }
+
 module.exports = Object.freeze({
     $eq,
     isObject,
@@ -297,5 +305,8 @@ module.exports = Object.freeze({
     m,
     both,
     either,
-    JS
+    and: both,
+    or: either,
+    JS,
+    assertType
 })
