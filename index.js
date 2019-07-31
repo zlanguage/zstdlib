@@ -24,7 +24,10 @@ function typeOf(thing) {
 }
 
 function $eq(left, right) {
-    if (left !== undefined && left.$eq) {
+    if (right != null && right.r$eq) {
+        return right.r$eq(left);
+    }
+    if (left != null && left.$eq) {
         return left.$eq(right);
     }
     let typeOfLeft = typeOf(left);
@@ -45,10 +48,9 @@ function $eq(left, right) {
         case "null":
         case "undefined":
             return true;
-        case "function":
-            return left.toString() === right.toString();
         case "number":
             return Math.abs(left - right) < Number.EPSILON;
+        case "function":
         case "string":
         case "boolean":
         case "bigint":
@@ -94,6 +96,9 @@ function log(...things) {
 }
 
 function $plus(x, y) {
+    if (x == null || y == null) {
+        return NaN;
+    }
     if (y["r+"]) {
         return y["r+"](x);
     }
@@ -104,6 +109,9 @@ function $plus(x, y) {
 }
 
 function $minus(x, y) {
+    if (x == null || y == null) {
+        return NaN;
+    }
     if (y["r-"]) {
         return y["r-"](x);
     }
@@ -114,6 +122,9 @@ function $minus(x, y) {
 }
 
 function $star(x, y) {
+    if (x == null || y == null) {
+        return NaN;
+    }
     if (y["r*"]) {
         return y["r*"](x);
     }
@@ -124,6 +135,9 @@ function $star(x, y) {
 }
 
 function $slash(x, y) {
+    if (x == null || y == null) {
+        return NaN;
+    }
     if (y["r/"]) {
         return y["r/"](x);
     }
@@ -134,6 +148,9 @@ function $slash(x, y) {
 }
 
 function $carot(x, y) {
+    if (x == null || y == null) {
+        return NaN;
+    }
     let res = x;
     for (let i = 0; i < y - 1; i++) {
         res = $star(res, x);
@@ -141,7 +158,23 @@ function $carot(x, y) {
     return res;
 }
 
+function $percent(x, y) {
+    if (x == null || y == null) {
+        return NaN;
+    }
+    if (y["r%"]) {
+        return y["r%"](x);
+    }
+    if (x["%"]) {
+        return x["%"](y);
+    }
+    return Number(x) % Number(y);
+}
+
 function $lt(x, y) {
+    if (x == null || y == null) {
+        return false;
+    }
     if (y["r<"]) {
         return y["r<"](x);
     }
@@ -296,6 +329,8 @@ module.exports = Object.freeze({
     $minus,
     $star,
     $slash,
+    $percent,
+    $carot,
     $lt,
     $gt$eq,
     $gt,
