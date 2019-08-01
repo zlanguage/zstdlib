@@ -334,7 +334,6 @@ const JS = {
     }
 }
 
-console.log(typeGeneric([1, 2, 3, NaN, "hola", [1, 2, 3]]))
 module.exports = Object.freeze({
     $eq,
     isObject,
