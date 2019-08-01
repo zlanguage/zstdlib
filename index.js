@@ -7,7 +7,7 @@ function typeOf(thing) {
         return "undefined";
     }
     if (thing.type !== undefined && typeof thing.type === "function") {
-        let type = thing.type();
+        const type = thing.type();
         if (typeof type === "string" && type !== "") {
             return type;
         }
@@ -21,6 +21,23 @@ function typeOf(thing) {
     } else {
         return typeof thing;
     }
+}
+
+function typeGeneric(thing) {
+    if (thing != null && thing.typeGeneric && typeof thing.typeGeneric === "function") {
+        const type = thing.typeGeneric();
+        if (typeof type === "string" && type !== "") {
+            return type;
+        }
+    }
+    if (Array.isArray(thing)) {
+        const types = new Set();
+        for (let i = 0; !thing.every(part => types.has(typeGeneric(part))); i++) {
+            types.add(typeGeneric(thing[i]))
+        }
+        return `array<${Array.from(types).join("|")}>`;
+    }
+    return typeOf(thing)
 }
 
 function $eq(left, right) {
@@ -317,6 +334,7 @@ const JS = {
     }
 }
 
+console.log(typeGeneric([1, 2, 3, NaN, "hola", [1, 2, 3]]))
 module.exports = Object.freeze({
     $eq,
     isObject,
@@ -343,5 +361,6 @@ module.exports = Object.freeze({
     and: both,
     or: either,
     JS,
-    assertType
+    assertType,
+    typeGeneric
 })
