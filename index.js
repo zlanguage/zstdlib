@@ -91,7 +91,7 @@ function stone(obj) {
 }
 
 function copy(obj) {
-    if (!isObject(obj)) {
+    if (!isObject(obj) || typeof obj === "function") {
         return obj;
     }
     try {
@@ -101,7 +101,7 @@ function copy(obj) {
             return obj;
         }
     }
-    let res = {};
+    let res = new(obj.constructor)()
     Object.entries(obj).forEach(([key, val]) => {
         res[key] = copy(val);
     });
