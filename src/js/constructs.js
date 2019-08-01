@@ -14,6 +14,8 @@ const $plus = $Z.$plus;
 const $minus = $Z.$minus;
 const $star = $Z.$star;
 const $slash = $Z.$slash;
+const $percent = $Z.$percent;
+const $carot = $Z.$carot;
 const $lt = $Z.$lt;
 const $gt$eq = $Z.$gt$eq;
 const $gt = $Z.$gt;
@@ -23,7 +25,10 @@ const $plus$plus = $Z.$plus$plus;
 const m = $Z.m;
 const both = $Z.both;
 const either = $Z.either;
+const and = $Z.and;
+const or = $Z.or;
 const JS = $Z.JS;
+const assertType = $Z.assertType;
 
 const _if = function (cond) {
   return {
