@@ -6,15 +6,16 @@ function typeOf(thing) {
     if (thing === undefined) {
         return "undefined";
     }
+    if (thing === null) {
+        return "null";
+    }
     if (thing.type !== undefined && typeof thing.type === "function") {
         const type = thing.type();
         if (typeof type === "string" && type !== "") {
             return type;
         }
     }
-    if (thing === null) {
-        return "null";
-    } else if (Number.isNaN(thing)) {
+    if (Number.isNaN(thing)) {
         return "NaN";
     } else if (Array.isArray(thing)) {
         return "array";
@@ -41,11 +42,11 @@ function typeGeneric(thing) {
 }
 
 function $eq(left, right) {
-    if (right != null && right.r$eq) {
-        return right.r$eq(left);
+    if (right != null && right["r="]) {
+        return right["r="](left);
     }
-    if (left != null && left.$eq) {
-        return left.$eq(right);
+    if (left != null && left["="]) {
+        return left["="](right);
     }
     let typeOfLeft = typeOf(left);
     let typeOfRight = typeOf(right);
@@ -257,79 +258,82 @@ const JS = {
     typeof(thing) {
         return typeof thing;
     },
-    $plus(x, y) {
+    instanceof(thing, superclass) {
+        return thing instanceof superclass
+    },
+    "+" (x, y) {
         if (y !== undefined) {
             return x + y;
         }
         return +x;
     },
-    $minus(x, y) {
+    "-" (x, y) {
         if (y !== undefined) {
             return x - y;
         }
         return -x;
     },
-    $star(x, y) {
+    "*" (x, y) {
         return x * y;
     },
-    $star$star(x, y) {
+    "**" (x, y) {
         return x ** y;
     },
-    $percent(x, y) {
+    "%" (x, y) {
         return x % y;
     },
-    $eq$eq(x, y) {
+    "==" (x, y) {
         return x == y;
     },
-    $eq$eq$eq(x, y) {
+    "===" (x, y) {
         return x === y;
     },
-    $exclam$eq(x, y) {
+    "!=" (x, y) {
         return x != y;
     },
-    $excalm$eq$eq(x, y) {
+    "!==" (x, y) {
         return x !== y;
     },
-    $gt(x, y) {
+    ">" (x, y) {
         return x > y;
     },
-    $lt(x, y) {
+    "<" (x, y) {
         return x < y;
     },
-    $gt$eq(x, y) {
+    ">=" (x, y) {
         return x >= y;
     },
-    $lt$eq(x, y) {
+    "<=" (x, y) {
         return x <= y;
     },
-    $and$and(x, y) {
+    "&&" (x, y) {
         return x && y;
     },
-    $or$or(x, y) {
+    "||" (x, y) {
         return x || y;
     },
-    $exclam(x) {
+    "!" (x) {
         return !x;
     },
-    $and(x, y) {
+    "&" (x, y) {
         return x & y;
     },
-    $or(x, y) {
+    "|" (x, y) {
         return x | y;
     },
-    $carot(x, y) {
+    "^" (x, y) {
         return x ^ y;
     },
-    bitwiseNot(x) {
+    "~" (x) {
         return ~x;
     },
-    $lt$lt(x, y) {
+    "<<" (x, y) {
         return x << y;
     },
-    $gt$gt(x, y) {
+    ">>" (x, y) {
         return x >> y;
     },
-    $gt$gt$gt(x, y) {
+    ">>>" (x, y) {
         return x >>> y;
     }
 }

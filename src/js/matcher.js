@@ -29,6 +29,7 @@ const and = $Z.and;
 const or = $Z.or;
 const JS = $Z.JS;
 const assertType = $Z.assertType;
+const typeGeneric = $Z.typeGeneric;
 
 const makePatTester = function (type) {
   return function (pat) {

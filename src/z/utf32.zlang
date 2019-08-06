@@ -34,7 +34,7 @@ def ustring: func (str) {
             return =(points, str.points())
         }
     ])
-}
+} 
 upoints: func (...points) {
     return ustring(points.map(func String.fromCodePoint(point!)).join(""))
 }
