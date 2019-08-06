@@ -352,6 +352,7 @@ module.exports = Object.freeze({
     $slash,
     $percent,
     $carot,
+    pow: $carot,
     $lt,
     $gt$eq,
     $gt,
