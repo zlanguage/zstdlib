@@ -16,6 +16,7 @@ const $star = $Z.$star;
 const $slash = $Z.$slash;
 const $percent = $Z.$percent;
 const $carot = $Z.$carot;
+const pow = $Z.pow;
 const $lt = $Z.$lt;
 const $gt$eq = $Z.$gt$eq;
 const $gt = $Z.$gt;
@@ -102,10 +103,4 @@ var $or$gt$gt = function (messages, actor) {
       return _raise("Invalid messages passed to send function.");
     }]])(messages);
 };
-module.exports = stone({
-  ["Actor"]: Actor,
-  ["send"]: send,
-  ["sendAll"]: sendAll,
-  ["|<<"]: $or$lt$lt,
-  ["|>>"]: $or$gt$gt
-});
+module.exports = stone([Actor, send, sendAll, $or$lt$lt, $or$gt$gt]);

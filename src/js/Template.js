@@ -16,6 +16,7 @@ const $star = $Z.$star;
 const $slash = $Z.$slash;
 const $percent = $Z.$percent;
 const $carot = $Z.$carot;
+const pow = $Z.pow;
 const $lt = $Z.$lt;
 const $gt$eq = $Z.$gt$eq;
 const $gt = $Z.$gt;
