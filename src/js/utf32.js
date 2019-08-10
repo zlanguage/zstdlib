@@ -95,8 +95,8 @@ upoints = function (...points) {
     return String["fromCodePoint"](point$exclam);
   })["join"](""));
 };
-const utf32 = {
+module.exports = stone({
   ["string"]: ustring,
   ["points"]: upoints,
   ["quote"]: quote
-};
+});

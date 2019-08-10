@@ -38,7 +38,7 @@ def ustring: func (str) {
 upoints: func (...points) {
     return ustring(points.map(func String.fromCodePoint(point!)).join(""))
 }
-def utf32: [
+export [
     "string": ustring,
     "points": upoints,
     quote
