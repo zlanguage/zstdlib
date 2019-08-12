@@ -251,6 +251,32 @@ function assertType(type, val) {
     }
     throw new Error(`${val} is not of type ${type}.`)
 }
+
+function chan() {
+    const mailbox = [];
+    return {
+        type() {
+            return "Channel"
+        },
+        _to(val) {
+            mailbox.push(val);
+        },
+        _from() {
+            return new Promise(resolve => {
+                if (mailbox.length > 0) {
+                    resolve(mailbox.pop());
+                    return;
+                }
+                const fromInterval = setInterval(() => {
+                    if (mailbox.length > 0) {
+                        clearInterval(fromInterval);
+                        resolve(mailbox.pop());
+                    }
+                }, 0);
+            });
+        }
+    }
+}
 const JS = {
     new(constructor, ...args) {
         return new(constructor)(...args);
@@ -275,9 +301,6 @@ const JS = {
     },
     "*" (x, y) {
         return x * y;
-    },
-    "/" (x, y) {
-        return x / y;
     },
     "**" (x, y) {
         return x ** y;
@@ -369,5 +392,6 @@ module.exports = Object.freeze({
     or: either,
     JS,
     assertType,
-    typeGeneric
+    typeGeneric,
+    chan
 })
