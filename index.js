@@ -277,6 +277,10 @@ function chan() {
         }
     }
 }
+
+function send(val, ch) {
+    ch.rcv(val);
+}
 const JS = {
     new(constructor, ...args) {
         return new(constructor)(...args);
@@ -393,5 +397,6 @@ module.exports = Object.freeze({
     JS,
     assertType,
     typeGeneric,
-    chan
+    chan,
+    send
 })
