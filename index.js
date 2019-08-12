@@ -258,7 +258,7 @@ function chan() {
         type() {
             return "Channel"
         },
-        _to(val) {
+        rcv(val) {
             mailbox.push(val);
         },
         _from() {
