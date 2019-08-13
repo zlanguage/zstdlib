@@ -31,6 +31,8 @@ const or = $Z.or;
 const JS = $Z.JS;
 const assertType = $Z.assertType;
 const typeGeneric = $Z.typeGeneric;
+const chan = $Z.chan;
+const send = $Z.send;
 
 const Tuple = function () {
   const fields = stone(Array["from"](arguments));

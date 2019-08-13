@@ -39,7 +39,7 @@ hoist Actor: func (onMessage function!, state: [:]) {
     ]
 }
 
-hoist send: func (message string!, actor Actor!) {
+hoist send': func (message string!, actor Actor!) {
     actor.recieve(message)
 }
 
@@ -65,7 +65,7 @@ hoist |>>: func (messages, actor) {
 
 export [
     Actor,
-    send,
+    "send": send',
     sendAll,
     |<<,
     |>>
