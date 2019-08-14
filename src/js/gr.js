@@ -218,6 +218,18 @@ const listen = async function (cb, ch) {
     cb(val);
   }
 };
+const select = function (chs, ch = chan()) {
+  let valueSent = false;
+  chs["forEach"](function ([c, cb]) {
+    c["_from"]()["then"](function (res) {
+      if (assertBool(not(valueSent))) {
+        valueSent = true;
+        send(cb(res), ch);
+      }
+    });
+  });
+  return ch;
+};
 module.exports = stone({
   ["gerror"]: gerror,
   ["wrapNodeCB"]: wrapNodeCB,
@@ -234,5 +246,6 @@ module.exports = stone({
   ["wait"]: wait,
   ["waitUntil"]: waitUntil,
   ["give"]: give,
-  ["listen"]: listen
+  ["listen"]: listen,
+  ["select"]: select
 });

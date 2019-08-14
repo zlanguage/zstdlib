@@ -189,6 +189,19 @@ def listen: go func (cb, ch) {
     }
 }
 
+def select: func (chs, ch: chan()) {
+    let valueSent: false
+    chs.forEach(func ((c, cb)) {
+        c._from().then(func (res) {
+            if not(valueSent) {
+                valueSent: true
+                send(cb(res), ch)
+            }
+        })
+    })
+    return ch
+}
+
 export [
     "gerror": gerror,
     wrapNodeCB,
@@ -205,5 +218,6 @@ export [
     wait,
     waitUntil,
     give,
-    listen
+    listen,
+    select
 ]
