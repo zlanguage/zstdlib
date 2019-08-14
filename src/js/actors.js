@@ -75,7 +75,7 @@ var Actor = function (onMessage, state = {}) {
     ["listen"]: listen
   };
 };
-var send = function (message, actor) {
+var send$quote = function (message, actor) {
   if (!($eq(typeOf(message), "string"))) { throw new Error("Enter failed") }
   if (!($eq(typeOf(actor), "Actor"))) { throw new Error("Enter failed") }
   actor["recieve"](message);
@@ -105,4 +105,10 @@ var $or$gt$gt = function (messages, actor) {
       return _raise("Invalid messages passed to send function.");
     }]])(messages);
 };
-module.exports = stone([Actor, send, sendAll, $or$lt$lt, $or$gt$gt]);
+module.exports = stone({
+  ["Actor"]: Actor,
+  ["send"]: send$quote,
+  ["sendAll"]: sendAll,
+  ["$or$lt$lt"]: $or$lt$lt,
+  ["$or$gt$gt"]: $or$gt$gt
+});

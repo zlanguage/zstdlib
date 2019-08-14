@@ -270,7 +270,7 @@ function chan() {
                 const fromInterval = setInterval(() => {
                     if (mailbox.length > 0) {
                         clearInterval(fromInterval);
-                        resolve(mailbox.pop());
+                        resolve(mailbox.shift());
                     }
                 }, 0);
             });
