@@ -6,6 +6,8 @@ def isType: makePatTester("type")
 def isObj: makePatTester("obj")
 def isProp: makePatTester("prop")
 def isRange: makePatTester("range")
+def isExtractor: makePatTester("extractor")
+def isPredicate: makePatTester("predicate")
 def pat=: func(val, pat) {
     if isWildcard(pat) {
         return true
@@ -39,6 +41,13 @@ def pat=: func(val, pat) {
             return true
         }
         return false
+    } else if isExtractor(pat) {
+        if =(pat.extract(val), undefined) {
+            return false
+        }
+        return true
+    } else if isPredicate(pat) {
+        return Boolean(pat.test(val))
     }
     return =(val, pat)
 }
@@ -63,6 +72,8 @@ def gatherWildcards: func(val, pat) {
         pat.props.forEach(func (prop) {
             wildcards.push(...gatherWildcards(val[prop.key], prop.value))
         })
+    } else if isExtractor(pat) {
+        wildcards.push(...gatherWildcards(pat.extract(val), pat.pat))
     }
     return wildcards
 }
@@ -98,18 +109,32 @@ def obj: func (...props){
         props
     ]
 }
-def prop: func (key, value){
+def prop: func (key, value) {
     return [
         "type": func "<|prop|>",
         key,
         value
     ]
 }
-def range: func(from, to){
+def extractor: func (extract, pat) {
+    return [
+        "type": func "<|extractor|>",
+        "extract": extract.extract,
+        pat
+    ]
+}
+
+def range: func (from, to) {
     return [
         "type": func "<|range|>",
         from,
         to
+    ]
+}
+def predicate: func (pred) {
+    return [
+        "type": func "<|predicate|>",
+        "test": pred
     ]
 }
 let _matcher: func(pats){
@@ -133,5 +158,7 @@ _matcher.prop: prop
 _matcher.type: type
 _matcher.obj: obj
 _matcher.range: range
+_matcher.extractor: extractor
+_matcher.predicate: predicate
 
 export _matcher

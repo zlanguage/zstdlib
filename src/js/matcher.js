@@ -46,6 +46,8 @@ const isType = makePatTester("type");
 const isObj = makePatTester("obj");
 const isProp = makePatTester("prop");
 const isRange = makePatTester("range");
+const isExtractor = makePatTester("extractor");
+const isPredicate = makePatTester("predicate");
 const pat$eq = function (val, pat) {
   if (assertBool(isWildcard(pat))) {
     return true;
@@ -83,6 +85,17 @@ const pat$eq = function (val, pat) {
               return true;
             }
             return false;
+          } else {
+            if (assertBool(isExtractor(pat))) {
+              if (assertBool($eq(pat["extract"](val), undefined))) {
+                return false;
+              }
+              return true;
+            } else {
+              if (assertBool(isPredicate(pat))) {
+                return Boolean(pat["test"](val));
+              }
+            }
           }
         }
       }
@@ -114,6 +127,10 @@ const gatherWildcards = function (val, pat) {
           pat["props"]["forEach"](function (prop) {
             wildcards["push"](...gatherWildcards(val[prop["key"]], prop["value"]));
           });
+        } else {
+          if (assertBool(isExtractor(pat))) {
+            wildcards["push"](...gatherWildcards(pat["extract"](val), pat["pat"]));
+          }
         }
       }
     }
@@ -170,6 +187,15 @@ const prop = function (key, value) {
     ["value"]: value
   };
 };
+const extractor = function (extract, pat) {
+  return {
+    ["type"]: function () {
+      return "<|extractor|>";
+    },
+    ["extract"]: extract["extract"],
+    ["pat"]: pat
+  };
+};
 const range = function (from, to) {
   return {
     ["type"]: function () {
@@ -177,6 +203,14 @@ const range = function (from, to) {
     },
     ["from"]: from,
     ["to"]: to
+  };
+};
+const predicate = function (pred) {
+  return {
+    ["type"]: function () {
+      return "<|predicate|>";
+    },
+    ["test"]: pred
   };
 };
 let _matcher = function (pats) {
@@ -200,4 +234,6 @@ _matcher["prop"] = prop;
 _matcher["type"] = type;
 _matcher["obj"] = obj;
 _matcher["range"] = range;
+_matcher["extractor"] = extractor;
+_matcher["predicate"] = predicate;
 module.exports = stone(_matcher);
