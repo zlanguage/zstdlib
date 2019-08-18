@@ -258,6 +258,9 @@ function chan() {
         type() {
             return "Channel"
         },
+        pending() {
+            return mailbox.length;
+        },
         rcv(val) {
             mailbox.push(val);
         },
