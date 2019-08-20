@@ -214,11 +214,11 @@ function $lt$eq(x, y) {
     return !$gt(x, y);
 }
 
-function $plus$plus(x, ...ys) {
+function $plus$plus(x, y) {
     if (!x.concat) {
         throw new Error(`${x} cannot be concatted.`);
     }
-    return x.concat(...ys);
+    return x.concat(y);
 }
 
 
