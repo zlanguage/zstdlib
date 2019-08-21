@@ -161,6 +161,7 @@ def eitherTwo: curry(func (preds array<function>!, arr array!) {
 })
 
 def equals: curry(=)
+
 def flatten: func (arr array!) {
     return arr.reduce(func(t, v){
         let toFlatten: undefined

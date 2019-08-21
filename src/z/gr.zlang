@@ -2,17 +2,7 @@ import fs
 import https
 import readline
 import F: "./F"
-# def readFile: func (path, ch: chan()) {
-#     fs.readFile(path, func (err, data) {
-#         if Boolean(err)  {
-#             log(err)
-#             send("???fail???", ch)
-#         } else {
-#             send(data, ch)
-#         }
-#     })
-#     return ch
-# }
+
 def gerror: func (err, ch) {
     send([
         "__err__": true,
