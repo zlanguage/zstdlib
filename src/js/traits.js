@@ -61,13 +61,23 @@ const Ord = function (obj) {
       return true;
     } else {
       if (assertBool($eq(objIndex, otherIndex))) {
-        return $gt$eq(obj["fields"]["filter"](function (field$exclam) {
-          return $lt(obj[field$exclam], other[field$exclam]);
-        })["length"], $slash(obj["fields"]["length"], 2));
-      } else {
-        return false;
+        let i = 0;
+        const fields = obj["fields"];
+        while (true) {
+          if (assertBool($gt$eq(i, fields["length"]))) {
+            break;
+          }
+          if (assertBool($lt(obj[fields[i]], other[fields[i]]))) {
+            return true;
+          }
+          if (assertBool($gt(obj[fields[i]], other[fields[i]]))) {
+            return false;
+          }
+          i = $plus(i, 1);
+        }
       }
     }
+    return false;
   };
   return obj;
 };

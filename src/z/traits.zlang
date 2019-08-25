@@ -19,10 +19,23 @@ def Ord: func (obj) {
         if objIndex < otherIndex {
             return true
         } else if objIndex = otherIndex {
-            return >=(obj.fields.filter(func obj[field!] < other[field!]).length, /(obj.fields.length, 2))
-        } else {
-            return false
+            # return >=(obj.fields.filter(func obj[field!] < other[field!]).length, /(obj.fields.length, 2))
+            let i: 0
+            def fields: obj.fields
+            loop {
+                if i >= fields.length {
+                    break
+                }
+                if obj[fields[i]] < other[fields[i]] {
+                    return true
+                }
+                if obj[fields[i]] > other[fields[i]] {
+                    return false
+                }
+                i: i + 1
+            }
         }
+        return false
     }
     return obj
 }
