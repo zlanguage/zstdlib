@@ -172,6 +172,9 @@ function $carot(x, y) {
     let res = x;
     for (let i = 0; i < y - 1; i++) {
         res = $star(res, x);
+        if (res === Infinity) {
+            return res;
+        }
     }
     return res;
 }
@@ -284,6 +287,58 @@ function chan() {
 function send(val, ch) {
     ch.rcv(val);
 }
+
+function to(start, end) {
+    if ($gt(start, end)) {
+        if (start.prev) {
+            let res = [];
+            for (i = start; !$eq(i, end); i = i.prev()) {
+                res.push(i);
+            }
+            return [...res, end];
+        }
+        let res = [];
+        for (i = start; i >= end; i--) {
+            res.push(i);
+        }
+        return res;
+    }
+    if (start.succ) {
+        let res = [];
+        for (i = start; !$eq(i, end); i = i.succ()) {
+            res.push(i);
+        }
+        return [...res, end];
+    }
+    let res = [];
+    for (i = start; i <= end; i++) {
+        res.push(i);
+    }
+    return res;
+}
+
+function til(start, end) {
+    return to(start, end).slice(0, -1);
+}
+
+function by(arr, amt) {
+    return arr.filter((_, index) => index % amt === 0);
+}
+
+function curry(func, argAmt = func.length) {
+    return function curried(...args) {
+        if (args.length >= argAmt) {
+            return func.apply(this, args);
+        } else {
+            return function(...args2) {
+                return curried.apply(this, args.concat(args2));
+            }
+        }
+    };
+}
+const $or$gt = (val, f) => f(val)
+const $gt$gt = (f1, f2) => (...args) => f1(f2(args))
+const $lt$lt = (f1, f2) => (...args) => f2(f1(args))
 const JS = {
     new(constructor, ...args) {
         return new(constructor)(...args);
@@ -292,7 +347,7 @@ const JS = {
         return typeof thing;
     },
     instanceof(thing, superclass) {
-        return thing instanceof superclass
+        return thing instanceof superclass;
     },
     "+" (x, y) {
         if (y !== undefined) {
@@ -373,36 +428,42 @@ const JS = {
         return x >>> y;
     }
 }
-
 module.exports = Object.freeze({
-    $eq,
+    $eq: curry($eq),
     isObject,
     typeOf,
     stone,
     log,
     copy,
     assertBool,
-    $plus,
-    $minus,
-    $star,
-    $slash,
-    $percent,
-    $carot,
-    pow: $carot,
-    $lt,
-    $gt$eq,
-    $gt,
-    $lt$eq,
+    $plus: curry($plus),
+    $minus: curry($minus),
+    $star: curry($star),
+    $slash: curry($slash),
+    $percent: curry($percent),
+    $carot: curry($carot),
+    pow: curry($carot),
+    $lt: curry($lt),
+    $gt$eq: curry($gt$eq),
+    $gt: curry($gt),
+    $lt$eq: curry($lt$eq),
     not,
-    $plus$plus,
+    $plus$plus: curry($plus$plus),
     m,
-    both,
-    either,
-    and: both,
-    or: either,
+    both: curry(both),
+    either: curry(either),
+    and: curry(both),
+    or: curry(either),
     JS,
     assertType,
     typeGeneric,
     chan,
-    send
+    send,
+    to: curry(to),
+    til: curry(til),
+    by: curry(by),
+    curry,
+    $or$gt: curry($or$gt),
+    $gt$gt: curry($gt$gt),
+    $lt$lt: curry($lt$lt)
 })
