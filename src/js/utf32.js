@@ -33,6 +33,13 @@ const assertType = $Z.assertType;
 const typeGeneric = $Z.typeGeneric;
 const chan = $Z.chan;
 const send = $Z.send;
+const to = $Z.to;
+const til = $Z.til;
+const by = $Z.by;
+const curry = $Z.curry;
+const $or$gt = $Z.$or$gt;
+const $gt$gt = $Z.$gt$gt;
+const $lt$lt = $Z.$lt$lt;
 
 const quote = String["fromCharCode"](34);
 let upoints = undefined;

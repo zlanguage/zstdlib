@@ -169,14 +169,13 @@ function $carot(x, y) {
     if (x == null || y == null) {
         return NaN;
     }
-    let res = x;
-    for (let i = 0; i < y - 1; i++) {
-        res = $star(res, x);
-        if (res === Infinity) {
-            return res;
-        }
+    if (y["r^"]) {
+        return y["r^"](x);
     }
-    return res;
+    if (x["^"]) {
+        return x["^"](y);
+    }
+    return Number(x) ** Number(y);
 }
 
 function $percent(x, y) {
