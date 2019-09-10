@@ -89,14 +89,16 @@ const Decimal = function (c, e, pure = false) {
         return other;
       }
       other = Decimal(other);
+      let newC = c;
+      let newE = e;
       if (assertBool(not($eq(other["e"], e)))) {
         if (assertBool($lt(other["e"], e))) {
           while (true) {
-            if (assertBool($eq(other["e"], e))) {
+            if (assertBool($eq(other["e"], newE))) {
               break;
             }
-            e = $minus(e, 1);
-            c = JS["*"](c, BigInt(10));
+            newE = $minus(newE, 1);
+            newC = JS["*"](newC, BigInt(10));
           }
         } else {
           while (true) {
@@ -107,7 +109,7 @@ const Decimal = function (c, e, pure = false) {
           }
         }
       }
-      return Decimal(JS["+"](c, other["c"]), e);
+      return Decimal(JS["+"](newC, other["c"]), newE);
     },
     ["r+"]: function (other) {
       other = Decimal(other);
@@ -182,6 +184,9 @@ const Decimal = function (c, e, pure = false) {
           return $plus$plus(prefix, numfmt($plus$plus($plus$plus($plus$plus(str["slice"](0, insertPlace), "."), zeros), str["slice"](insertPlace))));
         }
       }
+    },
+    ["toNumber"]: function () {
+      return Number(this["toString"]());
     }
   });
 };

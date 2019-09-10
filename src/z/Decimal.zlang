@@ -45,14 +45,16 @@ def Decimal: func (c, e, pure: false) {
                 return other
             }
             other: Decimal(other)
+            let newC: c
+            let newE: e
             if not(other.e = e) {
                 if other.e < e {
                     loop {
-                        if other.e = e {
+                        if other.e = newE {
                             break
                         }
-                        e: e - 1
-                        c: JS.*(c, BigInt(10))
+                        newE: newE - 1
+                        newC: JS.*(newC, BigInt(10))
                     }
                 } else {
                     loop {
@@ -63,7 +65,7 @@ def Decimal: func (c, e, pure: false) {
                     }
                 }
             }
-            return Decimal(JS.+(c, other.c), e)
+            return Decimal(JS.+(newC, other.c), newE)
         },
         "r+": func (other) {
             other: Decimal(other)
@@ -136,6 +138,9 @@ def Decimal: func (c, e, pure: false) {
                 def zeros: if (Math.abs(e) > str.length) "0".repeat(Math.abs(str.length + e)) else ""
                 return prefix ++ numfmt(str.slice(0, insertPlace) ++ "." ++ zeros ++ str.slice(insertPlace))
             }
+        },
+        "toNumber": func () {
+            return Number(this.toString())
         }
     ])
 }
