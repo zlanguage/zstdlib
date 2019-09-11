@@ -156,5 +156,5 @@ Rational["random"] = function (rat) {
   const amt = Math["floor"]($plus($star(Math["random"](), bound), 1));
   return $slash$slash(amt, bound);
 };
-Rational["//"] = $slash$slash;
+Rational["$slash$slash"] = $slash$slash;
 module.exports = stone(Rational);
