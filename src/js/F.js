@@ -98,20 +98,6 @@ const reject = curry(function (f, arr) {
   return res;
 }();
 });
-const $gt$gt = function (f1, f2) {
-  if (!($eq(typeOf(f1), "function"))) { throw new Error("Enter failed") }
-  if (!($eq(typeOf(f2), "function"))) { throw new Error("Enter failed") }
-  return function (...args) {
-    return f1(f2(...args));
-  };
-};
-const $lt$lt = function (f1, f2) {
-  if (!($eq(typeOf(f1), "function"))) { throw new Error("Enter failed") }
-  if (!($eq(typeOf(f2), "function"))) { throw new Error("Enter failed") }
-  return function (...args) {
-    return f2(f1(...args));
-  };
-};
 const prop = curry(function (p, obj) {
   if (!($eq(typeOf(p), "string"))) { throw new Error("Enter failed") }
   return obj[p];
@@ -279,10 +265,6 @@ const head = function (col$exclam) {
 };
 const tail = function (col$exclam) {
   return col$exclam["slice"](1);
-};
-const $or$gt = function (val, f) {
-  if (!($eq(typeOf(f), "function"))) { throw new Error("Enter failed") }
-  return f(val);
 };
 const double = mul(2);
 const triple = mul(3);
@@ -464,9 +446,6 @@ module.exports = stone({
   ["reject"]: reject,
   ["reduce"]: reduce,
   ["flatMap"]: flatMap,
-  ["$gt$gt"]: $gt$gt,
-  ["$lt$lt"]: $lt$lt,
-  ["$or$gt"]: $or$gt,
   ["$or"]: $or,
   ["prop"]: prop,
   ["invoke"]: invoke,

@@ -29,17 +29,6 @@ def reject: curry(func (f function!, arr array!) {
     ) a
 })
 
-def >>: func (f1 function!, f2 function!) {
-    return func (...args) {
-        return f1(f2(...args))
-    }
-}
-
-def <<: func (f1 function!, f2 function!) {
-    return func (...args) {
-        return f2(f1(...args))
-    }
-}
 def prop: curry(func (p string!, obj) {
     return obj[p]
 })
@@ -186,10 +175,6 @@ def has: methodInvoke("hasOwnProperty")
 def head: func col![0]
 
 def tail: func col!.slice(1)
-
-def |>: func (val, f function!) {
-    return f(val)
-}
 
 def double: mul(2)
 def triple: mul(3)
@@ -344,9 +329,6 @@ export [
     reject,
     reduce,
     flatMap,
-    >>,
-    <<,
-    |>,
     |,
     prop,
     invoke,
