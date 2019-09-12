@@ -16,5 +16,7 @@
     },
     "author": "N8",
     "license": "MIT",
-    "dependencies": {}
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.3"
+    }
 }
