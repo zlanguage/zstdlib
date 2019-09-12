@@ -86,7 +86,7 @@ const Decimal = function (c, e, pure = false) {
         return this;
       }
       if (assertBool($eq(this, 0))) {
-        return other;
+        return Decimal(other);
       }
       other = Decimal(other);
       let newC = c;
@@ -187,6 +187,12 @@ const Decimal = function (c, e, pure = false) {
     },
     ["toNumber"]: function () {
       return Number(this["toString"]());
+    },
+    ["prev"]: function () {
+      return $minus(this, 1);
+    },
+    ["succ"]: function () {
+      return $plus(this, 1);
     }
   });
 };

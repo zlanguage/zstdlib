@@ -270,7 +270,7 @@ const Json = function (obj) {
 const Curry = function (obj) {
   Object["keys"](obj)["forEach"](function (key) {
     if (assertBool($eq(typeOf(obj[key]), "function"))) {
-      obj[key] = F["curry"](obj[key]);
+      obj[key] = curry(obj[key]);
     }
   });
   return obj;

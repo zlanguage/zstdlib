@@ -42,7 +42,7 @@ def Decimal: func (c, e, pure: false) {
                 return this
             }
             if this = 0 {
-                return other
+                return Decimal(other)
             }
             other: Decimal(other)
             let newC: c
@@ -141,6 +141,12 @@ def Decimal: func (c, e, pure: false) {
         },
         "toNumber": func () {
             return Number(this.toString())
+        },
+        "prev": func () {
+            return this - 1
+        },
+        "succ": func () {
+            return this + 1
         }
     ])
 }

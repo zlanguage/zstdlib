@@ -43,16 +43,6 @@ const $lt$lt = $Z.$lt$lt;
 
 const constructs = stone(require("./constructs.js"));
 const {_raise} = constructs;
-const curry = function (f, n = f["length"]) {
-  if (!($eq(typeOf(f), "function"))) { throw new Error("Enter failed") }
-  const currify = function (...args) {
-    if (assertBool($gt$eq(args["length"], n))) {
-      return f["apply"](null, args);
-    }
-    return currify["bind"](null, ...args);
-  };
-  return currify;
-};
 const unary = function (f) {
   return function (a) {
     return f(a);
@@ -468,7 +458,6 @@ const zipWith = curry(function (f, as, bs) {
   });
 });
 module.exports = stone({
-  ["curry"]: curry,
   ["unary"]: unary,
   ["map"]: map,
   ["filter"]: filter,

@@ -1,14 +1,5 @@
 import constructs: "./constructs.js"
 def {_raise}: constructs
-def curry: func (f function!, n: f.length) {
-    def currify: func (...args) {
-        if args.length >= n {
-            return f.apply(null, args)
-        }
-        return currify.bind(null, ...args)
-    }
-    return currify
-}
 
 def unary: func (f) func (a) f(a)
 def map: curry(func (f function!, arr array!) {
@@ -347,8 +338,7 @@ def zipWith: curry(func (f function!, as array!, bs array!) {
 })
 
 export [
-    "curry": curry,
-    unary,
+    "unary": unary,
     map,
     filter,
     reject,
