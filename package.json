@@ -5,10 +5,13 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "zcomp dirt src/z src/js && sudo git add . && sudo git commit -m \"$npm_package_version\" && sudo git push && npm publish --access public"
+        "build": "zcomp dirt src/z src/js",
+        "publish": "sudo git commit -a -m \"$npm_package_version\" && sudo git push && npm publish --access public",
+        "release": "npm build && npm publish"
     },
     "keywords": [
-        "Z"
+        "Z",
+        "language"
     ],
     "repository": {
         "type": "git",
