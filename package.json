@@ -1,13 +1,13 @@
 {
     "name": "@zlanguage/zstdlib",
-    "version": "0.3.13",
+    "version": "0.3.14",
     "description": "The Z standard library and runtime.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "zcomp dirt src/z src/js",
-        "publish": "sudo git commit -a -m \"$npm_package_version\" && sudo git push && npm publish --access public",
-        "release": "npm build && npm publish"
+        "push": "sudo git commit -a -m \"$npm_package_version\" && sudo git push",
+        "release": "npm run push && npm publish --access public"
     },
     "keywords": [
         "Z",
