@@ -42,7 +42,7 @@ const $gt$gt = $Z.$gt$gt;
 const $lt$lt = $Z.$lt$lt;
 
 const cheerio = stone(require("cheerio"));
-const gr = stone(require("@zlanguage/zstdlib/src/js/gr"));
+const gr = stone(require("./gr"));
 const primeStore = [];
 const getMercens = async function (ch) {
   const $quote = cheerio["load"](await gr["page"]("https://www.mersenne.org/primes/")._from());
@@ -76,6 +76,11 @@ const primes = function (ch = chan()) {
     const primeList = await primeChan._from();
     const res = {
       ["number"]: function (num, ch = chan()) {
+        if (!($eq(typeOf(num), "number"))) { throw new Error("Enter failed") }
+        if (assertBool(or($lt(num, 0), $gt(num, $minus(primeList["length"], 1))))) {
+          const errStr = $plus$plus($plus$plus("There is no ", num), "st mersenne prime.");
+          throw new Error(errStr);
+        }
         const main = async function () {
           if (assertBool(not(primeStore[num]["startsWith"]("http")))) {
             send(primeStore[num], ch);

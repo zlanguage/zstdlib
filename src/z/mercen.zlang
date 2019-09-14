@@ -1,5 +1,5 @@
 import cheerio
-importstd gr
+import gr: "./gr"
 
 
 def primeStore: []
@@ -35,7 +35,11 @@ def primes: func (ch: chan()) {
         getMercens(primeChan)
         def primeList: get primeChan
         def res: [
-            "number": func (num, ch: chan()) {
+            "number": func (num number!, ch: chan()) {
+                if num < 0 or num > primeList.length - 1 {
+                    def errStr: "There is no " ++ num ++ "st mersenne prime."
+                    raise errStr
+                }
                 def main: func () {
                     if not(primeStore[num].startsWith("http")) {
                         send(primeStore[num], ch)
@@ -60,6 +64,5 @@ def primes: func (ch: chan()) {
     main()
     return ch
 }
-
 
 export primes
