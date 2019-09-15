@@ -4,7 +4,7 @@ def sequence: func (biop) func (start, term) {
     return [
         "approx": func (amt, ...prefs) {
             amt: Decimal(amt)
-            let result: Decimal(0)
+            let result: start
             {} ++ loop (num <- start to amt) result: biop(result, term(num, ...prefs))
             return result
         }
