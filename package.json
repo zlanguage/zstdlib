@@ -1,6 +1,6 @@
 {
     "name": "@zlanguage/zstdlib",
-    "version": "0.3.15",
+    "version": "0.3.16",
     "description": "The Z standard library and runtime.",
     "main": "index.js",
     "scripts": {
