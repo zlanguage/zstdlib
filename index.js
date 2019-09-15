@@ -338,6 +338,14 @@ function curry(func, argAmt = func.length) {
 const $or$gt = (val, f) => f(val)
 const $gt$gt = (f1, f2) => (...args) => f1(f2(args))
 const $lt$lt = (f1, f2) => (...args) => f2(f1(args))
+
+function handleErr(val, callback) {
+    if (val.__err__) {
+        callback(val.error)
+    }
+    return val
+}
+
 const JS = {
     new(constructor, ...args) {
         return new(constructor)(...args);
@@ -464,5 +472,6 @@ module.exports = Object.freeze({
     curry,
     $or$gt: curry($or$gt),
     $gt$gt: curry($gt$gt),
-    $lt$lt: curry($lt$lt)
+    $lt$lt: curry($lt$lt),
+    handleErr
 })
