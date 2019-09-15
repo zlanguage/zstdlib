@@ -119,8 +119,4 @@ taylor["cos"] = taylor["sum"](0, function (k, x) {
   }))["fill"](x)["reduce"]($star);
   return $star($slash(expResult, fac(amt)), sign);
 });
-const factorial = taylor["prod"](1, function (x$exclam) {
-  return x$exclam;
-});
-log(factorial["approx"](5));
 module.exports = stone(taylor);
