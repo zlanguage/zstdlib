@@ -19,6 +19,10 @@ function typeOf(thing) {
         return "NaN";
     } else if (Array.isArray(thing)) {
         return "array";
+    } else if (Object.prototype.toString.call(thing) === "[object RegExp]") {
+        return "regexp";
+    } else if (Object.prototype.toString.call(thing) === "[object Date]") {
+        return "date";
     } else {
         return typeof thing;
     }
@@ -74,6 +78,9 @@ function $eq(left, right) {
         case "bigint":
         case "symbol":
             return left === right;
+        case "regexp":
+        case "date":
+            return left.toString() === right.toString()
         case "array":
             return (left.length === right.length) && left.every((x, index) => $eq(x, right[index]))
         case "object":
@@ -435,6 +442,7 @@ const JS = {
         return x >>> y;
     }
 }
+
 module.exports = Object.freeze({
     $eq: curry($eq),
     isObject,
